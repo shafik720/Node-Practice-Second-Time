@@ -3,14 +3,14 @@ import spiderman from '../../assets/img/spiderman.jpg';
 
 const AddProduct = () => {
     return (
-        <div className='w-2/3 mx-auto'>
+        <div className='lg:w-2/3 mx-auto'>
             <div className="hero min-h-screen bg-base-200">
-                <div className="hero-content flex-col lg:flex-row gap-14">
+                <div className="hero-content flex-col-reverse md:flex-col-reverse lg:flex-row gap-14 justify-between">
                     <div className="text-center lg:text-left">
                         <img src={spiderman} className="max-w-sm rounded-lg shadow-2xl" />
                     </div>
-                    <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-                        <div className="card-body">
+                    <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100 border border-l border-slate-500">
+                        <div className="card-body ">
                             <div className="form-control">
                                 <label className="label">
                                     <span className="label-text">Email</span>
