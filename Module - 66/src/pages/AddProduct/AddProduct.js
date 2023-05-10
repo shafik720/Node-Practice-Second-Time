@@ -9,25 +9,28 @@ const AddProduct = () => {
                     <div className="text-center lg:text-left">
                         <img src={spiderman} className="max-w-sm rounded-lg shadow-2xl" />
                     </div>
-                    <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100 border border-l border-slate-500">
+                    <div className="card flex-shrink-0 w-full max-w-sm shadow-slate-500 shadow-black bg-base-100 ">
                         <div className="card-body ">
                             <div className="form-control">
                                 <label className="label">
-                                    <span className="label-text">Email</span>
+                                    <span className="label-text font-semibold">Product Name</span>
                                 </label>
-                                <input type="text" placeholder="email" className="input input-bordered" />
+                                <input type="text" placeholder="Product name" className="input border-2 rounded outline-none border-zinc-300" />
                             </div>
                             <div className="form-control">
                                 <label className="label">
-                                    <span className="label-text">Password</span>
+                                    <span className="label-text font-semibold">Product Image Link</span>
                                 </label>
-                                <input type="text" placeholder="password" className="input input-bordered" />
+                                <input type="text" placeholder="password" className="input border-2 rounded outline-none border-zinc-300" />
+                            </div>
+                            <div className="form-control">
                                 <label className="label">
-                                    <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
+                                    <span className="label-text font-semibold">Price</span>
                                 </label>
+                                <input type="number" placeholder="Price" className="input border-2 rounded outline-none border-zinc-300" />
                             </div>
                             <div className="form-control mt-6">
-                                <button className="btn btn-primary">Login</button>
+                                <button className="btn btn-primary">Add Product</button>
                             </div>
                         </div>
                     </div>
