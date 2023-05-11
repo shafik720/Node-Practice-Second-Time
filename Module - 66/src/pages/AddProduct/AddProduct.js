@@ -4,12 +4,12 @@ import spiderman from '../../assets/img/spiderman.jpg';
 const AddProduct = () => {
     return (
         <div className='lg:w-2/3 mx-auto'>
-            <div className="hero bg-base-200">
-                <div className="hero-content flex-col-reverse md:flex-row lg:flex-row gap-14 justify-between pt-0">
-                    <div className="text-center lg:text-left">  
+            <div className="hero ">
+                <div className="hero-content flex-col-reverse md:flex-row lg:flex-row gap-14 justify-between">
+                    <div className="text-center lg:text-left">
                         <img alt='' src={spiderman} className="max-w-sm rounded-lg shadow-2xl" />
                     </div>
-                    <div className="card flex-shrink-0 w-full max-w-sm shadow-slate-500  bg-base-100 ">
+                    <div className="card flex-shrink-0 w-full max-w-sm  ">
                         <div className="card-body ">
                             {/* <h2 className='font-bold text-2xl text-center text-slate-700 '>Add a New Product</h2> */}
                             <div className="form-control">
