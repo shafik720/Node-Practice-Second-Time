@@ -4,8 +4,8 @@ import spiderman from '../../assets/img/spiderman.jpg';
 const AddProduct = () => {
     return (
         <div className='lg:w-2/3 mx-auto'>
-            <div className="hero min-h-screen bg-base-200">
-                <div className="hero-content flex-col-reverse md:flex-row lg:flex-row gap-14 justify-between">
+            <div className="hero bg-base-200">
+                <div className="hero-content flex-col-reverse md:flex-row lg:flex-row gap-14 justify-between pt-0">
                     <div className="text-center lg:text-left">  
                         <img alt='' src={spiderman} className="max-w-sm rounded-lg shadow-2xl" />
                     </div>
