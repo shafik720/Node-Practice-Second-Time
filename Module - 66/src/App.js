@@ -9,10 +9,17 @@ function App() {
   const router = createBrowserRouter([
     {
       path : '/',
+      loader : ()=> fetch('http://localhost:5000/products'),
       element : <Home></Home>,
       children : [
-        {path: '/', element: <AddProduct></AddProduct>},
-        {path : '/viewProduct', element : <ShowProduct></ShowProduct>}
+        {
+          path: '/', 
+          element: <AddProduct></AddProduct>, 
+        },
+        {
+          path : '/viewProduct', 
+          element : <ShowProduct></ShowProduct> , 
+        }
       ]
     }
   ])

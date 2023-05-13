@@ -24,6 +24,7 @@ async function run() {
       const database = client.db("PracticeDB");
       const folder = database.collection("PracticeProduct");
 
+      // --- add a new product      
       app.post('/products/add', async(req, res)=>{
         const body = req.body;
         // console.log(body);
@@ -31,6 +32,13 @@ async function run() {
         res.send(result) ; 
       })
       
+      // --- get all products
+      app.get('/products', async(req,res)=>{
+        const query = {} ; 
+        const cursor = folder.find(query);
+        const result = await cursor.toArray();
+        res.send(result) ;
+      })
       
     } finally {
     //   await client.close();

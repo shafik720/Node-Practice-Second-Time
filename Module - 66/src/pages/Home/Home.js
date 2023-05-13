@@ -1,14 +1,21 @@
-import React from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 import AddProduct from '../AddProduct/AddProduct';
 import Header from '../Header/Header';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLoaderData } from 'react-router-dom';
+import axios from 'axios';
 
-const Home = () => {
+
+export const ProductContext = createContext();
+
+const Home = () => {    
+    const products = useLoaderData() ; 
+    console.log(products) ; 
+
     return (
-        <div>
+        <ProductContext.Provider value={products}>
             <Header></Header>
             <Outlet></Outlet>
-        </div>
+        </ProductContext.Provider>
     );
 };
 
