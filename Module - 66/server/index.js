@@ -30,12 +30,7 @@ async function run() {
         const result = await folder.insertOne(body);
         res.send(result) ; 
       })
-      // create a document to insert
-    //   const doc = {
-    //     title: "Record of a Shriveled Datum",
-    //     content: "No bytes, no problem. Just insert a document, in MongoDB",
-    //   }
-    //   const result = await folder.insertOne(doc);
+      
       
     } finally {
     //   await client.close();
