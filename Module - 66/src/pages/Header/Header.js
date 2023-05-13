@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import productIcon from '../../assets/img/box.png';
+import { ProductContext } from '../Home/Home';
 
 const Header = () => {
+    const products = useContext(ProductContext);
     return (
-        <div className='text-center mt-10'>
+        <div className='text-center mt-10'>            
             <ul className="menu menu-horizontal bg-base-100 rounded-box mx-auto shadow-xl ">
                 <li  className="tooltip tooltip-bottom" data-tip="Home" >
                 <Link to="/">
@@ -21,8 +23,8 @@ const Header = () => {
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                     </Link>
                 </li>
-                
             </ul>
+            {/* <h2 className='mb-o mt-5'>Total Products : {products.length} </h2> */}
         </div>
     );
 };
