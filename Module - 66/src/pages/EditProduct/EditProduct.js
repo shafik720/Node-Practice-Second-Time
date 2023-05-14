@@ -1,7 +1,9 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 const EditProduct = () => {
+    const[product, setProduct] = useState({});
     const params = useParams();
     const { id } = params;
 
@@ -10,10 +12,22 @@ const EditProduct = () => {
         e.preventDefault();
         let productName = e.target.productName.value;
         let productImg = e.target.productImg.value;
-        let productPrice = e.target.productPrice.value;
-
-        
+        let productPrice = e.target.productPrice.value;        
     }
+    
+        // --- find the single product
+        useEffect(()=>{
+            const response = axios.get(`http://localhost:5000/products/${id}`)
+            .then(res => {
+                setProduct(res.data);
+            })
+            .catch(err => {console.log(err)})
+        },[]);
+
+        console.log(product);
+        
+        const {productName, productImg, productPrice} = product ; 
+
     return (
         <div className='lg:w-2/3 mx-auto'>
             <div className="hero ">
@@ -29,19 +43,19 @@ const EditProduct = () => {
                                     <label className="label">
                                         <span className="label-text font-semibold">Product Name</span>
                                     </label>
-                                    <input type="text" placeholder="Product name" className="input border-2 rounded outline-none border-zinc-300 focus:border-blue-500  focus:outline-none " name='productName' required />
+                                    <input defaultValue={productName} type="text" placeholder="Product name" className="input border-2 rounded outline-none border-zinc-300 focus:border-blue-500  focus:outline-none " name='productName' required />
                                 </div>
                                 <div className="form-control">
                                     <label className="label">
                                         <span className="label-text font-semibold">Product Image Link</span>
                                     </label>
-                                    <input type="text" placeholder="Link for the image" className="input border-2 rounded outline-none border-zinc-300 focus:border-blue-500  focus:outline-none " name='productImg' required />
+                                    <input defaultValue={productImg}  type="text" placeholder="Link for the image" className="input border-2 rounded outline-none border-zinc-300 focus:border-blue-500  focus:outline-none " name='productImg' required />
                                 </div>
                                 <div className="form-control">
                                     <label className="label">
                                         <span className="label-text font-semibold">Price</span>
                                     </label>
-                                    <input type="number" placeholder="Price" className="input border-2 rounded outline-none border-zinc-300 focus:border-blue-500  focus:outline-none " name='productPrice' required />
+                                    <input defaultValue={productPrice}  type="number" placeholder="Price" className="input border-2 rounded outline-none border-zinc-300 focus:border-blue-500  focus:outline-none " name='productPrice' required />
                                 </div>
                                 <div className="form-control mt-6">
                                     <button className="btn btn-primary">Add Product</button>

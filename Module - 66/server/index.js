@@ -48,6 +48,15 @@ async function run() {
         const result =  await folder.deleteOne(query);
         res.send(result);
       })
+
+      // --- get a single product details
+      app.get('/products/:id', async(req, res)=>{
+        const params = req.params;
+        const {id} = params ; 
+        const query = {_id : new ObjectId(id)};
+        const result = await folder.findOne(query);
+        res.send(result) ; 
+      })
       
     } finally {
     //   await client.close();
