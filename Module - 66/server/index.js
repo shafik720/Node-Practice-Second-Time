@@ -2,7 +2,7 @@
 const express = require('express');
 const app = express() ; 
 const port = process.env.PORT || 5000 ; 
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const cors = require('cors');
 
 app.use(express.json()); 
@@ -38,6 +38,15 @@ async function run() {
         const cursor = folder.find(query);
         const result = await cursor.toArray();
         res.send(result) ;
+      })
+
+      // --- delete a product
+      app.delete('/products/delete/:id', async(req, res)=>{
+        const params = req.params;
+        const {id} = params;
+        const query = {_id : new ObjectId(id)};
+        const result =  await folder.deleteOne(query);
+        res.send(result);
       })
       
     } finally {
