@@ -57,6 +57,18 @@ async function run() {
         const result = await folder.findOne(query);
         res.send(result) ; 
       })
+
+      // --- update a product 
+      app.patch('/products/update/:id', async(req, res)=>{
+        const params = req.params;
+        const {id} = params ; 
+        const data = req.body;
+        const filter = {_id : new ObjectId(id)};
+        const update = {$set : data};
+
+        const result = await folder.updateOne(filter, update);
+        res.send(result) ; 
+      })
       
     } finally {
     //   await client.close();

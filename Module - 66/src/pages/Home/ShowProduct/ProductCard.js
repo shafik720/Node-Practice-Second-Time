@@ -37,7 +37,7 @@ const ProductCard = ({ product }) => {
         navigate(`/editProduct/${id}`)
     }
     return (
-        <div className="card w-11/12 border-4 border-gray-800 shadow-2xl  pt-4 ">
+        <div className="card w-11/12 border-4 border-gray-800 shadow-2xl  pt-10 mt-10 ">
             <figure className=''><img className='w-4/5' src={productImg} alt="car!" /></figure>
             <div className="card-body">
                 <h2 className="card-title">{productName}</h2>

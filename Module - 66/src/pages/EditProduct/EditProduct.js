@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const EditProduct = () => {
     const [product, setProduct] = useState({});
@@ -11,15 +11,27 @@ const EditProduct = () => {
     const params = useParams();
     const { id } = params;
 
-    // --- adding product to mongodb
+    // --- updating product to mongodb
+    const navigate = useNavigate();
     const handleSubmit = (e) => {
         e.preventDefault();
-        let productName = e.target.productName.value;
-        let productImg = e.target.productImg.value;
-        let productPrice = e.target.productPrice.value;
+        console.log('updating : ', id) ; 
+        axios.patch(`http://localhost:5000/products/update/${id}`,{productName, productImg, productPrice})
+        .then(res => {
+            console.log(res);
+            if(res.data.modifiedCount > 0){
+                console.log('Updated') ; 
+                window.alert('Data updated Successfully !');
+                navigate('/viewProduct');
+            }
+        })
+        .catch(err => {
+            console.log(err);
+            window.alert('There was an error updating the product!');
+        })
     }
 
-    // --- deciding what to render in the image section ;
+    // --- deciding what to render in the image section 
     function validImg(img) {
         if (img?.toLowerCase()?.includes('.png') || img?.toLowerCase()?.includes('.jpg')) {
             // console.log('got it')
@@ -27,7 +39,6 @@ const EditProduct = () => {
             setProductImg("https://i.ibb.co/kMq0G6x/breakfast4.png");
         }
     }
-    // validImg(product?.productImg);
 
     // --- find the single product
     useEffect(() => {
@@ -41,7 +52,6 @@ const EditProduct = () => {
     }, []);
 
     validImg(productImg)
-    console.log(product);
 
     // let { productName, productImg, productPrice } = product;
 
@@ -50,18 +60,14 @@ const EditProduct = () => {
     return (
         <div className='lg:w-2/3 mx-auto'>
             <div className="hero ">
-                <div className="hero-content flex-col-reverse md:flex-row lg:flex-row gap-14 justify-between">
+                <div className="hero-content flex-col-reverse md:flex-row lg:flex-row gap-14 justify-between ">
 
                     {/* --- left side --- */}
                     <div className="card w-full border-4 border-gray-800 shadow-2xl  pt-4 ">
-                        <figure className=''><img className='w-4/5' src={productImg} alt="car!" /></figure>
+                        <figure className=''><img className=' w-4/5' src={productImg} alt="car!" /></figure>
                         <div className="card-body">
                             <h2 className="card-title">{productName}</h2>
                             <p className='font-bold text-2xl text-red-600 mb-8'>Price : {productPrice} </p>
-                            {/* <div className="card-actions  justify-end flex flex-row">
-                                <button onClick={() => editProduct(_id)} className="btn btn-sm btn-primary">Edit Product</button>
-                                <button onClick={() => handleDelete(_id)} className="btn btn-sm ">Delete Product</button>
-                            </div> */}
                         </div>
                     </div>
 
