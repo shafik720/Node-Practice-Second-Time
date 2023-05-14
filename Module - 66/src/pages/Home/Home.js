@@ -10,10 +10,10 @@ export const ProductContext = createContext();
 const Home = () => {    
 
     return (
-        <ProductContext.Provider>
+        <div>
             <Header></Header>
             <Outlet></Outlet>
-        </ProductContext.Provider>
+        </div>
     );
 };
 
