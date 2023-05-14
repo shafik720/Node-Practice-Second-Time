@@ -4,6 +4,7 @@ import { BrowserRouter, Route, RouterProvider, Routes, createBrowserRouter } fro
 import Home from './pages/Home/Home';
 import ShowProduct from './pages/Home/ShowProduct/ShowProduct';
 import AddProduct from './pages/AddProduct/AddProduct';
+import EditProduct from './pages/EditProduct/EditProduct';
 
 function App() {
   const router = createBrowserRouter([
@@ -19,6 +20,10 @@ function App() {
         {
           path : '/viewProduct', 
           element : <ShowProduct></ShowProduct> , 
+        },
+        {
+          path : '/editProduct/:id', 
+          element : <EditProduct></EditProduct> , 
         }
       ]
     }

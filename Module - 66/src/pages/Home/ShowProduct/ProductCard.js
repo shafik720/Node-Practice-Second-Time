@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const ProductCard = ({ product }) => {
     let { productImg, productName, _id, productPrice } = product;
@@ -30,6 +31,11 @@ const ProductCard = ({ product }) => {
                 })
         }
     }
+    // --- taking user to edit product page
+    const navigate = useNavigate();
+    const editProduct = (id) => {
+        navigate(`/editProduct/${id}`)
+    }
     return (
         <div className="card w-11/12 border-4 border-gray-800 shadow-2xl  pt-4 ">
             <figure className=''><img className='w-4/5' src={productImg} alt="car!" /></figure>
@@ -37,7 +43,7 @@ const ProductCard = ({ product }) => {
                 <h2 className="card-title">{productName}</h2>
                 <p>How to park your car at your garage ?</p>
                 <div className="card-actions  justify-end flex flex-row">
-                    <button className="btn btn-sm btn-primary">Edit Product</button>
+                    <button onClick={()=>editProduct(_id)} className="btn btn-sm btn-primary">Edit Product</button>
                     <button onClick={() => handleDelete(_id)} className="btn btn-sm ">Delete Product</button>
                 </div>
             </div>
