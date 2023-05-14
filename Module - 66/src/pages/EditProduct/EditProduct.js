@@ -74,22 +74,22 @@ const EditProduct = () => {
                                     <label className="label">
                                         <span className="label-text font-semibold">Product Name</span>
                                     </label>
-                                    <input defaultValue={productName} type="text" placeholder="Product name" className="input border-2 rounded outline-none border-zinc-300 focus:border-blue-500  focus:outline-none " name='productName' required />
+                                    <input onChange={e => setProductName(e.target.value)} defaultValue={productName} type="text" placeholder="Product name" className="input border-2 rounded outline-none border-zinc-300 focus:border-blue-500  focus:outline-none " name='productName' required />
                                 </div>
                                 <div className="form-control">
                                     <label className="label">
                                         <span className="label-text font-semibold">Product Image Link</span>
                                     </label>
-                                    <input defaultValue={productImg} type="text" placeholder="Link for the image" className="input border-2 rounded outline-none border-zinc-300 focus:border-blue-500  focus:outline-none " name='productImg' required />
+                                    <input  onChange={e => setProductImg(e.target.value)} defaultValue={productImg} type="text" placeholder="Link for the image" className="input border-2 rounded outline-none border-zinc-300 focus:border-blue-500  focus:outline-none " name='productImg' required />
                                 </div>
                                 <div className="form-control">
                                     <label className="label">
                                         <span className="label-text font-semibold">Price</span>
                                     </label>
-                                    <input defaultValue={productPrice} type="number" placeholder="Price" className="input border-2 rounded outline-none border-zinc-300 focus:border-blue-500  focus:outline-none " name='productPrice' required />
+                                    <input  onChange={e => setProductPrice(e.target.value)} defaultValue={productPrice} type="number" placeholder="Price" className="input border-2 rounded outline-none border-zinc-300 focus:border-blue-500  focus:outline-none " name='productPrice' required />
                                 </div>
                                 <div className="form-control mt-6">
-                                    <button className="btn btn-primary">Add Product</button>
+                                    <button className="btn btn-primary">Update Product</button>
                                 </div>
                             </form>
                         </div>
