@@ -18,7 +18,7 @@ const ShowProduct = () => {
         <div className=''>
             <h2 className='text-center mt-8 font-bold text-xl'>Total Products Found : {productss.length} </h2>
 
-            <div className="product-div w-5/6 mx-auto my-14 lg:grid lg:grid-cols-3 gap-x-4 gap-y-10">
+            <div className="product-div w-5/6 mx-auto mt-7 mb-14 lg:grid lg:grid-cols-3 gap-x-4 gap-y-10">
                 {/* --- single card ---- */}
                 {productss.map(index => <ProductCard key={index._id}product={index}></ProductCard>)}
             </div>
