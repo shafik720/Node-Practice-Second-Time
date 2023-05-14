@@ -13,23 +13,6 @@ const AddProduct = () => {
         let productPrice = e.target.productPrice.value;
         setUser({ productName, productImg, productPrice });
 
-        // fetch('http://localhost:5000/products/add', {
-        //     method : 'POST',
-        //     headers : {
-        //         'content-type' : 'application/json'
-        //     },
-        //     body : JSON.stringify({ productName, productImg, productPrice })
-        // })
-        // .then(res => res.json())
-        // .then(data => {
-        //     if(data.insertedId){
-        //         window.alert('Product added Successfully ');
-        //         e.target.reset();
-        //     }else{
-        //         window.alert('There was an error adding the product');
-        //     }
-        // })
-
         axios.post('http://localhost:5000/products/add', {productName, productImg, productPrice})
         .then(res => {
             console.log(res);
