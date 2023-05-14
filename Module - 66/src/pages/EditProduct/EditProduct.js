@@ -4,6 +4,10 @@ import { useParams } from 'react-router-dom';
 
 const EditProduct = () => {
     const [product, setProduct] = useState({});
+    const [productName, setProductName] = useState('');
+    const [productImg, setProductImg] = useState('');
+    const [productPrice, setProductPrice] = useState('');
+
     const params = useParams();
     const { id } = params;
 
@@ -15,47 +19,53 @@ const EditProduct = () => {
         let productPrice = e.target.productPrice.value;
     }
 
-    // --- find the single product
-    useEffect(() => {
-        const response = axios.get(`http://localhost:5000/products/${id}`)
-            .then(res => {
-                setProduct(res.data);
-            })
-            .catch(err => { console.log(err) })
-    }, []);
-
-    console.log(product);
-
-    let { productName, productImg, productPrice } = product;
-
-    // ---
+    // --- deciding what to render in the image section ;
     function validImg(img) {
         if (img?.toLowerCase()?.includes('.png') || img?.toLowerCase()?.includes('.jpg')) {
             // console.log('got it')
         } else {
-            productImg = "https://i.ibb.co/kMq0G6x/breakfast4.png"
+            setProductImg("https://i.ibb.co/kMq0G6x/breakfast4.png");
         }
     }
-    validImg(product?.productImg);
+    // validImg(product?.productImg);
+
+    // --- find the single product
+    useEffect(() => {
+        const response = axios.get(`http://localhost:5000/products/${id}`)
+            .then(res => {
+                setProductName(res.data.productName);
+                setProductImg(res.data.productImg);
+                setProductPrice(res.data.productPrice);
+            })
+            .catch(err => { console.log(err) })
+    }, []);
+
+    validImg(productImg)
+    console.log(product);
+
+    // let { productName, productImg, productPrice } = product;
+
+    
 
     return (
         <div className='lg:w-2/3 mx-auto'>
             <div className="hero ">
                 <div className="hero-content flex-col-reverse md:flex-row lg:flex-row gap-14 justify-between">
-                    <div className="text-center lg:text-left">
-                        {/* <img alt='' src={spiderman} className="max-w-sm rounded-lg shadow-2xl" /> */}
-                        <div className="card w-11/12 border-4 border-gray-800 shadow-2xl  pt-4 ">
-                            <figure className=''><img className='w-4/5' src={productImg} alt="car!" /></figure>
-                            <div className="card-body">
-                                <h2 className="card-title">{productName}</h2>
-                                <p>How to park your car at your garage ?</p>
-                                {/* <div className="card-actions  justify-end flex flex-row">
-                                    <button onClick={() => editProduct(_id)} className="btn btn-sm btn-primary">Edit Product</button>
-                                    <button onClick={() => handleDelete(_id)} className="btn btn-sm ">Delete Product</button>
-                                </div> */}
-                            </div>
+
+                    {/* --- left side --- */}
+                    <div className="card w-full border-4 border-gray-800 shadow-2xl  pt-4 ">
+                        <figure className=''><img className='w-4/5' src={productImg} alt="car!" /></figure>
+                        <div className="card-body">
+                            <h2 className="card-title">{productName}</h2>
+                            <p className='font-bold text-2xl text-red-600 mb-8'>Price : {productPrice} </p>
+                            {/* <div className="card-actions  justify-end flex flex-row">
+                                <button onClick={() => editProduct(_id)} className="btn btn-sm btn-primary">Edit Product</button>
+                                <button onClick={() => handleDelete(_id)} className="btn btn-sm ">Delete Product</button>
+                            </div> */}
                         </div>
                     </div>
+
+                    {/* --- right side --- */}
                     <div className="card flex-shrink-0 w-full max-w-sm  ">
                         <div className="card-body ">
                             {/* <h2 className='font-bold text-2xl text-center text-slate-700 '>Add a New Product</h2> */}

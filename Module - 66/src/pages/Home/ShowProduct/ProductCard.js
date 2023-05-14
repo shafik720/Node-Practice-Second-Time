@@ -41,7 +41,7 @@ const ProductCard = ({ product }) => {
             <figure className=''><img className='w-4/5' src={productImg} alt="car!" /></figure>
             <div className="card-body">
                 <h2 className="card-title">{productName}</h2>
-                <p>How to park your car at your garage ?</p>
+                <p className='font-bold text-2xl text-red-600 mb-8'>Price : {productPrice} </p>
                 <div className="card-actions  justify-end flex flex-row">
                     <button onClick={()=>editProduct(_id)} className="btn btn-sm btn-primary">Edit Product</button>
                     <button onClick={() => handleDelete(_id)} className="btn btn-sm ">Delete Product</button>
