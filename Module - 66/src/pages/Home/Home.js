@@ -8,11 +8,9 @@ import axios from 'axios';
 export const ProductContext = createContext();
 
 const Home = () => {    
-    const products = useLoaderData() ; 
-    console.log(products) ; 
 
     return (
-        <ProductContext.Provider value={products}>
+        <ProductContext.Provider>
             <Header></Header>
             <Outlet></Outlet>
         </ProductContext.Provider>

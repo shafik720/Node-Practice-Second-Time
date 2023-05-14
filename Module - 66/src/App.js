@@ -9,7 +9,7 @@ function App() {
   const router = createBrowserRouter([
     {
       path : '/',
-      loader : ()=> fetch('http://localhost:5000/products'),
+      // loader : ()=> fetch('http://localhost:5000/products'),
       element : <Home></Home>,
       children : [
         {
