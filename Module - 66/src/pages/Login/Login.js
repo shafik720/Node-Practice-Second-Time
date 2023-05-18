@@ -1,15 +1,39 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth' ; 
+import auth from '../../firebase.init';
 
 const Login = () => {
 
     // --- loging in
+    const [
+        signInWithEmailAndPassword,
+        user,
+        loading,
+        error,
+      ] = useSignInWithEmailAndPassword(auth);
+
     const handleSubmit = (e) => {
         e.preventDefault();
+        let email = e.target.email.value;
+        let password = e.target.password.value;
+        console.log(email, password);
+        signInWithEmailAndPassword(email, password) ;
     }
+    useEffect(()=>{
+        if(loading){
+            console.log('Loading')
+        }
+        if(error){
+            console.log(error.message);
+        }
+        if(user){
+            console.log(user);
+        }
+    },[loading, error, user])
     return (
-        <div className="card  w-full mt-10">
-            <div className="card-body w-full sm:w-full md:w-4/6 mx-auto lg:w-2/6">
+        <div className="card  w-full my-10 ">
+            <div className="card-body w-full sm:w-full md:w-4/6 mx-auto lg:w-2/6 shadow-2xl">
                 <h2 className='font-bold text-2xl text-center text-slate-700'>Login</h2>
                 <hr />
                 <form action="" onSubmit={handleSubmit}>
@@ -17,13 +41,13 @@ const Login = () => {
                         <label className="label">
                             <span className="label-text font-semibold">Your Email</span>
                         </label>
-                        <input type="text" placeholder="Email" className="input border-2 rounded outline-none border-zinc-300 focus:border-blue-500  focus:outline-none " name='Email' required />
+                        <input type="text" placeholder="Email" className="input border-2 rounded outline-none border-zinc-300 focus:border-blue-500  focus:outline-none " name='email' required />
                     </div>
                     <div className="form-control">
                         <label className="label">
                             <span className="label-text font-semibold">Your Password</span>
                         </label>
-                        <input type="text" placeholder="Password" className="input border-2 rounded outline-none border-zinc-300 focus:border-blue-500  focus:outline-none " name='Password' required />
+                        <input placeholder="Password" className="input border-2 rounded outline-none border-zinc-300 focus:border-blue-500  focus:outline-none " type={"password"} name='password' required />
                     </div>
                     <div className="form-control mt-6">
                         <button className="btn btn-primary">Login</button>
