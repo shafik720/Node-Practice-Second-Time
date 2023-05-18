@@ -30,6 +30,13 @@ const Login = () => {
                     </div>
                 </form>
                 <h2 className=" mt-2">Don't have an account ? <span className='font-semibold text-cyan-500'><Link to={'/register'}>Register Here</Link></span> </h2>
+                <div className="social-login">
+                    <h2 className=" text-center my-5">Or Sign in using</h2>
+                    <button className="social-login-icon flex justify-center items-center border-2 px-8 py-2 border-slate-600 mx-auto w-full">
+                        <img className='w-8' src="https://i.ibb.co/Kh4pXXb/google.png" alt="" />
+                        <h2 className='ms-3 font-semibold'>Google </h2>
+                    </button>
+                </div>
             </div>
         </div>
     );
