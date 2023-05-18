@@ -7,6 +7,8 @@ import AddProduct from './pages/AddProduct/AddProduct';
 import EditProduct from './pages/EditProduct/EditProduct';
 import Login from './pages/Login/Login';
 import { ToastContainer } from 'react-toastify';
+import Services from './pages/Services/Services';
+import PrivateRoute from './pages/PrivateRoute/PrivateRoute';
 
 function App() {
   const router = createBrowserRouter([
@@ -17,7 +19,7 @@ function App() {
       children: [
         {
           path: '/',
-          element: <Login></Login>
+          element: <PrivateRoute><Services></Services></PrivateRoute>
         },
         {
           path: '/addProduct',

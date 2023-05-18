@@ -1,5 +1,5 @@
 import React, { useEffect,useState, CSSProperties  } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth' ; 
 import auth from '../../firebase.init';
 import { ClipLoader } from 'react-spinners';
@@ -7,6 +7,11 @@ import { toast } from 'react-toastify';
 
 
 const Login = () => {
+
+    // --- private route authentication formalities
+    const location = useLocation();
+    const navigate = useNavigate();
+    const from = location?.state?.from?.pathname || '/' ; 
 
     // --- sign in with email & password 
     const [
@@ -54,8 +59,8 @@ const Login = () => {
         if(error){
             errorMsg(error.message)
         }
-        if(user){
-            console.log(user);
+        if(user || googleUser){
+            navigate(from, {replace: true});
         }
     },[loading, error, user])
     return (
