@@ -6,35 +6,39 @@ import ShowProduct from './pages/Home/ShowProduct/ShowProduct';
 import AddProduct from './pages/AddProduct/AddProduct';
 import EditProduct from './pages/EditProduct/EditProduct';
 import Login from './pages/Login/Login';
+import { ToastContainer } from 'react-toastify';
 
 function App() {
   const router = createBrowserRouter([
     {
-      path : '/',
+      path: '/',
       // loader : ()=> fetch('http://localhost:5000/products'),
-      element : <Home></Home>,
-      children : [
+      element: <Home></Home>,
+      children: [
         {
-          path : '/',
-          element : <Login></Login>
+          path: '/',
+          element: <Login></Login>
         },
         {
-          path: '/addProduct', 
-          element: <AddProduct></AddProduct>, 
+          path: '/addProduct',
+          element: <AddProduct></AddProduct>,
         },
         {
-          path : '/viewProduct', 
-          element : <ShowProduct></ShowProduct> , 
+          path: '/viewProduct',
+          element: <ShowProduct></ShowProduct>,
         },
         {
-          path : '/editProduct/:id', 
-          element : <EditProduct></EditProduct> , 
+          path: '/editProduct/:id',
+          element: <EditProduct></EditProduct>,
         }
       ]
     }
   ])
   return (
+    <div>
       <RouterProvider router={router}></RouterProvider>
+      <ToastContainer />
+    </div>
   );
 }
 
