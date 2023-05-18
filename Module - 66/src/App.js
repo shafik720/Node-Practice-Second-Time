@@ -5,6 +5,7 @@ import Home from './pages/Home/Home';
 import ShowProduct from './pages/Home/ShowProduct/ShowProduct';
 import AddProduct from './pages/AddProduct/AddProduct';
 import EditProduct from './pages/EditProduct/EditProduct';
+import Login from './pages/Login/Login';
 
 function App() {
   const router = createBrowserRouter([
@@ -14,7 +15,11 @@ function App() {
       element : <Home></Home>,
       children : [
         {
-          path: '/', 
+          path : '/',
+          element : <Login></Login>
+        },
+        {
+          path: '/addProduct', 
           element: <AddProduct></AddProduct>, 
         },
         {
