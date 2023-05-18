@@ -1,6 +1,6 @@
 import React, { useEffect,useState, CSSProperties  } from 'react';
 import { Link } from 'react-router-dom';
-import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth' ; 
+import { useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth' ; 
 import auth from '../../firebase.init';
 import { ClipLoader } from 'react-spinners';
 import { toast } from 'react-toastify';
@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 
 const Login = () => {
 
-    // --- loging in
+    // --- sign in with email & password 
     const [
         signInWithEmailAndPassword,
         user,
@@ -16,13 +16,21 @@ const Login = () => {
         error,
       ] = useSignInWithEmailAndPassword(auth);
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        let email = e.target.email.value;
-        let password = e.target.password.value;
-        console.log(email, password);
-        signInWithEmailAndPassword(email, password) ;
+      const handleSubmit = (e) => {
+          e.preventDefault();
+          let email = e.target.email.value;
+          let password = e.target.password.value;
+          console.log(email, password);
+          signInWithEmailAndPassword(email, password) ;
+      }
+
+    // --- sign in with google login
+    const [signInWithGoogle, googleUser, googleLoading, googleError] = useSignInWithGoogle(auth);
+
+    const handleGoogleSignin = () => {
+        signInWithGoogle();
     }
+
 
     // --- showing a loading spinner when login process will begin
     const spinner = <ClipLoader color="white" size={25} />
@@ -41,10 +49,9 @@ const Login = () => {
 
     useEffect(()=>{
         if(loading){
-            console.log('Loading')
+            // console.log('Loading')
         }
         if(error){
-            console.log(error.message);
             errorMsg(error.message)
         }
         if(user){
@@ -76,7 +83,7 @@ const Login = () => {
                 <h2 className=" mt-2">Don't have an account ? <span className='font-semibold text-cyan-500'><Link to={'/register'}>Register Here</Link></span> </h2>
                 <div className="social-login">
                     <h2 className=" text-center my-5">Or Sign in using</h2>
-                    <button className="social-login-icon flex justify-center items-center border-2 px-8 py-2 border-slate-600 mx-auto w-full">
+                    <button onClick={handleGoogleSignin} className="social-login-icon flex justify-center items-center border-2 px-8 py-2 border-slate-600 mx-auto w-full">
                         <img className='w-8' src="https://i.ibb.co/Kh4pXXb/google.png" alt="" />
                         <h2 className='ms-3 font-semibold'> Google </h2>
                     </button>
