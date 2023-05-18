@@ -28,6 +28,10 @@ function App() {
           element: <ShowProduct></ShowProduct>,
         },
         {
+          path: '/login',
+          element: <Login></Login>,
+        },
+        {
           path: '/editProduct/:id',
           element: <EditProduct></EditProduct>,
         }
