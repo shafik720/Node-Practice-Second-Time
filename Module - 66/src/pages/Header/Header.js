@@ -10,7 +10,6 @@ const Header = () => {
 
     // --- checking if user is logged in
     const [user] = useAuthState(auth);
-    console.log(user);
 
     // --- logout user
     const [signOut, loading, error] = useSignOut(auth);
