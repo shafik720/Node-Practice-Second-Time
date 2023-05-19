@@ -36,6 +36,12 @@ const Header = () => {
                         Products
                     </Link>
                 </li>
+                <li className="tooltip tooltip-bottom" data-tip="Products" >
+                    <Link to="/bookings">
+                        <img src="https://i.ibb.co/JmVZ2Qk/car-repair.png" className='h-5 w-5' alt="" />
+                        Bookings
+                    </Link>
+                </li>
                 <li className="tooltip tooltip-bottom" >
                     {user ?
                         <a href="" onClick={handleLogout}> <img src="https://i.ibb.co/DbsKJ2g/user-3.png" className='h-5 w-5' alt="" /> Logout</a> : <Link to="/login">
