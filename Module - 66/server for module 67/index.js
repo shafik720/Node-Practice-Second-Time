@@ -23,14 +23,20 @@ const client = new MongoClient(uri, {
 async function run() {
     try {
         const serviceCollection = client.db("Car_Service_Practice").collection('Services');
+        const bookedServiceCollection = client.db("Car_Service_Practice").collection('Booking');
 
+        // --- getting all the service details from server
         app.get('/services', async (req, res) => {
             const query = {};
             const cursor = serviceCollection.find(query);
             const result = await cursor.toArray();
             res.send(result);
-      })
+        })
 
+        //   --- add bookings
+        app.post('/bookings/add', async(req, res)=>{
+            console.log(req.body);
+        })
 
     } finally {
         //   await client.close();
