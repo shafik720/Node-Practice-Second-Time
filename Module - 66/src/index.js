@@ -5,10 +5,19 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 import 'react-toastify/dist/ReactToastify.css';
+import { Provider } from 'react-redux';
+
+import { store } from './app/store';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <App />
+
+    <React.StrictMode>
+        <Provider store={store}>
+            <App />
+        </Provider>
+    </React.StrictMode>
+
 );
 
 // If you want to start measuring performance in your app, pass a function
