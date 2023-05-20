@@ -24,6 +24,7 @@ async function run() {
     try {
         const serviceCollection = client.db("Car_Service_Practice").collection('Services');
         const bookedServiceCollection = client.db("Car_Service_Practice").collection('Bookings');
+        const user = client.db("Car_Service_Practice").collection('Users');
 
         // --- getting all the service details from server
         app.get('/services', async (req, res) => {
@@ -34,21 +35,33 @@ async function run() {
         })
 
         //   --- add bookings
-        app.post('/bookings/add', async(req, res)=>{
+        app.put('/bookings/add', async (req, res) => {
             const body = req.body;
-            const result = await bookedServiceCollection.insertOne(body);
+            const { bookings } = body;
+
+            const filter = { 'user.email': body.email }
+            const options = { upsert: true };
+            const updatedDoc = {
+                $set: {
+                    bookings : body.bookings
+                }
+            };
+
+            const result = await user.updateOne(filter, updatedDoc, options);
+
+            // const result = await bookedServiceCollection.insertOne(body);
             res.send(result);
-            // console.log(body);
+            console.log(result);
         })
 
         // --- get single booking details
-        app.get('/bookings/singleBookings', async(req, res)=>{
-            const{email} = req.query ; 
+        app.get('/bookings/singleBookings', async (req, res) => {
+            const { email } = req.query;
 
-            const query = {'user.email' : email} ;
-            const result = await bookedServiceCollection.findOne(query) ;
+            const query = { 'user.email': email };
+            const result = await bookedServiceCollection.findOne(query);
             // console.log(result); 
-            res.send(result); 
+            res.send(result);
         })
 
     } finally {
