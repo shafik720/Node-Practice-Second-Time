@@ -23,7 +23,7 @@ const client = new MongoClient(uri, {
 async function run() {
     try {
         const serviceCollection = client.db("Car_Service_Practice").collection('Services');
-        const bookedServiceCollection = client.db("Car_Service_Practice").collection('Booking');
+        const bookedServiceCollection = client.db("Car_Service_Practice").collection('Bookings');
 
         // --- getting all the service details from server
         app.get('/services', async (req, res) => {
@@ -35,7 +35,20 @@ async function run() {
 
         //   --- add bookings
         app.post('/bookings/add', async(req, res)=>{
-            console.log(req.body);
+            const body = req.body;
+            const result = await bookedServiceCollection.insertOne(body);
+            res.send(result);
+            // console.log(body);
+        })
+
+        // --- get single booking details
+        app.get('/bookings/singleBookings', async(req, res)=>{
+            const{email} = req.query ; 
+
+            const query = {'user.email' : email} ;
+            const result = await bookedServiceCollection.findOne(query) ;
+            // console.log(result); 
+            res.send(result); 
         })
 
     } finally {
@@ -52,3 +65,11 @@ app.get('/', (req, res) => {
 app.listen(port, () => {
     console.log('Listening to port 5000 ');
 })
+
+
+/* 
+user : {
+    email : rasel@gmail.com,
+    name : rasel
+}
+*/
