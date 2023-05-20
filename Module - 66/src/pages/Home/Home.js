@@ -16,7 +16,7 @@ const Home = () => {
 
     const userState = useSelector(state => state.user);
     const { userAdded } = userState;
-    console.log(user);
+    console.log(userAdded);
     const disptach = useDispatch();
 
     // --- adding a new user to mongodb
