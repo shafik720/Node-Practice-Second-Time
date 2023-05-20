@@ -24,7 +24,7 @@ async function run() {
     try {
         const serviceCollection = client.db("Car_Service_Practice").collection('Services');
         const bookedServiceCollection = client.db("Car_Service_Practice").collection('Bookings');
-        const user = client.db("Car_Service_Practice").collection('Users');
+        const userDatabase = client.db("Car_Service_Practice").collection('Users');
 
         // --- getting all the service details from server
         app.get('/services', async (req, res) => {
@@ -34,25 +34,24 @@ async function run() {
             res.send(result);
         })
 
-        //   --- add bookings
-        app.put('/bookings/add', async (req, res) => {
-            const body = req.body;
-            const { bookings } = body;
+        //   --- add a user
+        app.put('/addUser', async(req, res)=>{
+            const filter = {email : req.body.email}
+            const options = {upsert : true }
 
-            const filter = { 'user.email': body.email }
-            const options = { upsert: true };
             const updatedDoc = {
-                $set: {
-                    bookings : body.bookings
+                $set : {
+                    email : req.body.email,
+                    displayName : req.body.displayName
                 }
-            };
+            }
+            const result = await userDatabase.updateOne(filter, updatedDoc, options);
+            res.send(result)
+            console.log(result) ; 
+        })       
 
-            const result = await user.updateOne(filter, updatedDoc, options);
 
-            // const result = await bookedServiceCollection.insertOne(body);
-            res.send(result);
-            console.log(result);
-        })
+          
 
         // --- get single booking details
         app.get('/bookings/singleBookings', async (req, res) => {
@@ -80,9 +79,13 @@ app.listen(port, () => {
 })
 
 
-/* 
-user : {
+
+/* user : {
     email : rasel@gmail.com,
-    name : rasel
-}
-*/
+    name : rasel,
+    hobby : [
+        {title : 'singing', title_id : 1},
+        {title : 'boating', title_id : 2},
+        {title : 'dancing', title_id : 3},
+    ]
+} */

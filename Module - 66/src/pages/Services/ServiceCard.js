@@ -17,12 +17,12 @@ const ServiceCard = ({ data }) => {
 
     // --- add a booking to database
     const handleBooking = (id) => {
-        addServiceBooking({
-            user : reloadUserInfo,
-            bookingServiceDetails : [data],
-            status : 'pending',
-            email : user.email 
-        })
+        let data2 = {...data, status: 'pending'};
+        // addServiceBooking({
+        //     user : reloadUserInfo,
+        //     bookings : data2,
+        //     email : user.email 
+        // })
 
 
         // const response = axios.put('http://localhost:5000/bookings/add', {reloadUserInfo}).then(res => console.log(res))
