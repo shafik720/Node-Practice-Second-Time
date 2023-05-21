@@ -72,7 +72,7 @@ const ServiceCard = ({ data }) => {
 
             <div className=" mt-5 flex justify-between items-center  rounded-md py-3 mx-3">
                 <h2 className='m-0 font-bold text-2xl'>${price}</h2>
-                <button className={customClassbtn } onClick={() => handleBooking(_id)}> {loader} {buttonText}</button>
+                <button className={customClassbtn} disabled={isBooked } onClick={() => handleBooking(_id)}> {loader} {buttonText}</button>
             </div>
         </div>
     );
