@@ -23,6 +23,12 @@ export const userApi = apiSlice.injectEndpoints({
                 }
             }
         }),
+        getUser : builder.query({
+            query : (email)=> ({
+                url : `/users/${email}`,
+                method : 'GET',                
+            })
+        }),
         addBookings : builder.mutation({
             query : ({email, bookingDetails}) =>({
                 url : '/user/addBooking',
@@ -47,4 +53,4 @@ export const userApi = apiSlice.injectEndpoints({
 })
 
 
-export const { useAddUserMutation, useAddBookingsMutation } = userApi; 
+export const { useAddUserMutation, useAddBookingsMutation, useGetUserQuery } = userApi; 

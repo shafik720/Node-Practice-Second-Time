@@ -79,6 +79,14 @@ async function run() {
               }
         })
 
+        // --- get a single user data
+        app.get('/users/:email', async(req, res)=>{
+            const params = req.params;
+            const{email} = params;
+            const query = {email : email};
+            const result = await userDatabase.findOne(query);
+            res.send(result)
+        })
 
         // --- get single booking details
         app.get('/bookings/singleBookings', async (req, res) => {

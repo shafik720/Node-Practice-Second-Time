@@ -1,18 +1,27 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init';
 import { useAddServiceBookingMutation } from '../../app/features/services/serviceApi';
 import axios from 'axios';
-import { useAddBookingsMutation } from '../../app/features/users/userApi';
+import { useAddBookingsMutation, useGetUserQuery } from '../../app/features/users/userApi';
 
 const ServiceCard = ({ data }) => {
     
     const { _id, price, img, title, service_id } = data;
-    // console.log(service_id);
+    const[isBooked, setIsBooked] = useState(false);
 
-    // --- getting user info
+    // --- getting user info from firebase using firebase useAuth Hook
     const [user, loading, error] = useAuthState(auth);
-    const {reloadUserInfo} = user ; 
+    
+    // --- getting user info from mongodb using Redux Toolkit Query 
+    const {data : singleUser, isLoading : userLoading, isError : userIsError, error : userError} = useGetUserQuery(user.email);
+    useEffect(()=> {
+        let bookingDone = singleUser?.bookings?.find(index=>index.service_id === service_id)
+        if(bookingDone){
+            setIsBooked(true);
+        }
+    },[user, singleUser])
+    // console.log(singleUser?.bookings);
 
     // --- adding booking data through rtk query
     const[addBookings, {isLoading, isError, error : bookingError}]     = useAddBookingsMutation();
@@ -38,7 +47,7 @@ const ServiceCard = ({ data }) => {
 
             <div className=" mt-5 flex justify-between items-center  rounded-md py-3 mx-3">
                 <h2 className='m-0 font-bold text-2xl'>${price}</h2>
-                <button className='btn btn-info' onClick={() => handleBooking(_id)}>Book Service</button>
+                <button className='btn btn-info' onClick={() => handleBooking(_id)}>{isBooked ? 'Booked' : 'Book Service'}</button>
             </div>
         </div>
     );
