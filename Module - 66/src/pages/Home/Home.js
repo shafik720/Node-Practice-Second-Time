@@ -1,18 +1,19 @@
 import React, { createContext, useEffect, useState } from 'react';
-import AddProduct from '../AddProduct/AddProduct';
 import Header from '../Header/Header';
-import { Outlet, useLoaderData } from 'react-router-dom';
-import axios from 'axios';
+import { Outlet } from 'react-router-dom';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init';
 import { useDispatch, useSelector } from 'react-redux';
-import { useAddUserMutation } from '../../app/features/users/userApi';
+import { useAddUserMutation, useGetUserQuery } from '../../app/features/users/userApi';
 
 
 export const ProductContext = createContext();
 
 const Home = () => {
-    const [user, loading] = useAuthState(auth);
+    const [user, loading] = useAuthState(auth);    
+    
+    // --- gettting that user from mongodb
+    const { data: singleUser, isLoading: singleUserLoading } = useGetUserQuery(user?.email)
 
     const userState = useSelector(state => state.user);
     const { userAdded } = userState;
@@ -28,7 +29,7 @@ const Home = () => {
                 addUser({
                     email: user.email,
                     displayName: user.displayName,
-                    role : 'user'
+                    role: 'user'
                 });
             }
         }
