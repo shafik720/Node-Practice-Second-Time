@@ -45,7 +45,6 @@ const ServiceCard = ({ data }) => {
     let customClassbtn = 'btn btn-primary';
     let buttonText = 'Book Now' ; 
     if(isLoading && !isError){
-        console.log('Booking is going on');
         customClassbtn = 'btn btn-warning';
         buttonText = 'Booking' ; 
         loader = <ClipLoader className='me-2' color="white" size={25} />
