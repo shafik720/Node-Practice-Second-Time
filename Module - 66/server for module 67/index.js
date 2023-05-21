@@ -35,24 +35,58 @@ async function run() {
         })
 
         //   --- add a user
-        app.put('/addUser', async(req, res)=>{
-            const filter = {email : req.body.email}
-            const options = {upsert : true }
+        app.put('/addUser', async (req, res) => {
+            const filter = { email: req.body.email }
+            const options = { upsert: true }
 
             const updatedDoc = {
-                $set : {
-                    email : req.body.email,
-                    displayName : req.body.displayName,
-                    role : req.body.role
+                $set: {
+                    email: req.body.email,
+                    displayName: req.body.displayName,
+                    role: req.body.role
                 }
             }
             const result = await userDatabase.updateOne(filter, updatedDoc, options);
             res.send(result)
-            console.log(result) ; 
-        })       
+            // console.log(result);
+        })
 
+        // --- update a user with new bookings
+        app.patch('/user/addBooking', async (req, res) => {
+            console.log(req.body);
+            // const query = {
+            //     'user.email': req.body.email,
+            //     'user.bookings': {
+            //         $not: {
+            //             $elemMatch: {
+            //                 service_Id: req.body.service_Id
+            //             }
+            //         }
+            //     }
+            // }
+            // const update = {
+            //     $push: {
+            //         'user.bookings': req.body.bookings
+            //     }
+            // }
+            // const result = userDatabase.findOneAndUpdate(query, update, (err, result) => {
+            //     if (err) {
+            //         console.error('Error while updating the document:', err);
+            //         // res.status(500).send('Internal Server Error');
+            //         return;
+            //     }
 
-          
+            //     if (!result.value) {
+            //         console.log('Email not found or hobby already exists');
+            //         res.send('Email not found or hobby already exists');
+            //         return;
+            //     }
+
+            //     console.log('Hobby added successfully');
+            //     res.send('Hobby added successfully');
+            // })
+        })
+
 
         // --- get single booking details
         app.get('/bookings/singleBookings', async (req, res) => {

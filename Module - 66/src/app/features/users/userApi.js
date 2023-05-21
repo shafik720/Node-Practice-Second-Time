@@ -22,6 +22,26 @@ export const userApi = apiSlice.injectEndpoints({
                     console.log(err)
                 }
             }
+        }),
+        addBookings : builder.mutation({
+            query : ({email, bookingDetails}) =>({
+                url : '/user/addBooking',
+                method : 'PATCH',
+                body : {email, bookingDetails}
+            }),
+            async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+                try {
+                    console.log('Sending data : ',arg)
+                    const bookingAdded = await queryFulfilled;
+                    console.log('Response from Server : ',bookingAdded)
+                    // if (userAdded.data.acknowledged) {
+                    //     dispatch(addedUser(true))
+                    // }
+                    
+                } catch (err) {
+                    console.log(err)
+                }
+            }
         })
     })
 })
