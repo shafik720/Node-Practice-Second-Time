@@ -4,7 +4,7 @@ import productIcon from '../../assets/img/box.png';
 import { ProductContext } from '../Home/Home';
 import { useAuthState, useSignOut } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addedUser } from '../../app/features/users/userSlice';
 
 const Header = () => {
@@ -16,6 +16,15 @@ const Header = () => {
     // --- change redux state when user logged out
     const dispatch = useDispatch();
 
+    // --- getting user state
+    let counter = null; 
+    const userStates = useSelector(state => state.user);
+    const{user: userInStates} = userStates; 
+    console.log(userInStates?.bookings?.length);
+    if(userInStates?.bookings?.length > 0){
+        counter = userInStates.bookings.length;
+    }
+ 
     // --- logout user
     const [signOut, loading, error] = useSignOut(auth);
     const handleLogout = (e) => {
@@ -45,7 +54,7 @@ const Header = () => {
                 <li className="tooltip tooltip-bottom" data-tip="Products" >
                     <Link to="/bookings">
                         <img src="https://i.ibb.co/JmVZ2Qk/car-repair.png" className='h-5 w-5' alt="" />
-                        Bookings
+                        Bookings <span className='border-2 border-red-600 w-6 h-6  flex justify-center items-center rounded-full ps-0'>{counter}</span>
                     </Link>
                 </li>
                 <li className="tooltip tooltip-bottom" >
