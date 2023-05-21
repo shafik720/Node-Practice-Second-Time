@@ -64,7 +64,7 @@ const ServiceCard = ({ data }) => {
     }
     },[isLoading, isError, isSuccess ])
     return (
-        <div className="border-4 flex flex-col justify-between">
+        <div className="border-4 flex flex-col justify-between mt">
             <div className="">
                 <img src={img} className='w-full' alt="" />
             </div>

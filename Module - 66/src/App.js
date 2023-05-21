@@ -9,6 +9,7 @@ import Login from './pages/Login/Login';
 import { ToastContainer } from 'react-toastify';
 import Services from './pages/Services/Services';
 import PrivateRoute from './pages/PrivateRoute/PrivateRoute';
+import Bookings from './pages/Bookings/Bookings';
 
 function App() {
   const router = createBrowserRouter([
@@ -32,6 +33,10 @@ function App() {
         {
           path: '/login',
           element: <Login></Login>,
+        },
+        {
+          path: '/bookings',
+          element: <Bookings></Bookings>,
         },
         {
           path: '/editProduct/:id',
