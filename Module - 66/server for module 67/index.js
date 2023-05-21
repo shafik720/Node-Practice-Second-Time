@@ -42,7 +42,8 @@ async function run() {
             const updatedDoc = {
                 $set : {
                     email : req.body.email,
-                    displayName : req.body.displayName
+                    displayName : req.body.displayName,
+                    role : req.body.role
                 }
             }
             const result = await userDatabase.updateOne(filter, updatedDoc, options);

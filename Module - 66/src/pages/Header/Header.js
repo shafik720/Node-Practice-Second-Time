@@ -4,12 +4,17 @@ import productIcon from '../../assets/img/box.png';
 import { ProductContext } from '../Home/Home';
 import { useAuthState, useSignOut } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init';
+import { useDispatch } from 'react-redux';
+import { addedUser } from '../../app/features/users/userSlice';
 
 const Header = () => {
     const products = useContext(ProductContext);
 
     // --- checking if user is logged in
     const [user] = useAuthState(auth);
+
+    // --- change redux state when user logged out
+    const dispatch = useDispatch();
 
     // --- logout user
     const [signOut, loading, error] = useSignOut(auth);
@@ -18,6 +23,7 @@ const Header = () => {
         let isConfirm = window.confirm("Log Out ? ")
         if (isConfirm) {
             signOut();
+            dispatch(addedUser(false));
         }
     }
 

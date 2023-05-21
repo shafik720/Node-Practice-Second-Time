@@ -28,6 +28,7 @@ const Home = () => {
                 addUser({
                     email: user.email,
                     displayName: user.displayName,
+                    role : 'user'
                 });
             }
         }
