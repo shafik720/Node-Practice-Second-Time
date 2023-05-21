@@ -3,29 +3,30 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init';
 import { useAddServiceBookingMutation } from '../../app/features/services/serviceApi';
 import axios from 'axios';
+import { useAddBookingsMutation } from '../../app/features/users/userApi';
 
 const ServiceCard = ({ data }) => {
     
-    const { _id, price, img, title } = data;
+    const { _id, price, img, title, service_id } = data;
+    // console.log(service_id);
 
     // --- getting user info
     const [user, loading, error] = useAuthState(auth);
     const {reloadUserInfo} = user ; 
 
     // --- adding booking data through rtk query
-    const[addServiceBooking, {isLoading, isError, error : bookingError}]     = useAddServiceBookingMutation();
+    const[addBookings, {isLoading, isError, error : bookingError}]     = useAddBookingsMutation();
+
 
     // --- add a booking to database
     const handleBooking = (id) => {
         let data2 = {...data, status: 'pending'};
-        // addServiceBooking({
-        //     user : reloadUserInfo,
-        //     bookings : data2,
-        //     email : user.email 
-        // })
-
-
-        // const response = axios.put('http://localhost:5000/bookings/add', {reloadUserInfo}).then(res => console.log(res))
+        addBookings({
+            email : user.email,
+            bookingDetails : {
+                service_id 
+            }
+        });
     }
     return (
         <div className="border-4 flex flex-col justify-between">

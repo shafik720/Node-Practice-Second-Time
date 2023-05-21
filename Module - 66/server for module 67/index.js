@@ -54,37 +54,37 @@ async function run() {
         // --- update a user with new bookings
         app.patch('/user/addBooking', async (req, res) => {
             console.log(req.body);
-            // const query = {
-            //     'user.email': req.body.email,
-            //     'user.bookings': {
-            //         $not: {
-            //             $elemMatch: {
-            //                 service_Id: req.body.service_Id
-            //             }
-            //         }
-            //     }
-            // }
-            // const update = {
-            //     $push: {
-            //         'user.bookings': req.body.bookings
-            //     }
-            // }
-            // const result = userDatabase.findOneAndUpdate(query, update, (err, result) => {
-            //     if (err) {
-            //         console.error('Error while updating the document:', err);
-            //         // res.status(500).send('Internal Server Error');
-            //         return;
-            //     }
+            const query = {
+                'user.email': req.body.email,
+                'user.bookings': {
+                    $not: {
+                        $elemMatch: {
+                            service_id: req.body.bookingDetails.service_id
+                        }
+                    }
+                }
+            }
+            const update = {
+                $push: {
+                    'user.bookings': req.body.bookingDetails
+                }
+            }
+            const result = userDatabase.findOneAndUpdate(query, update, (err, result) => {
+                if (err) {
+                    console.error('Error while updating the document:', err);
+                    // res.status(500).send('Internal Server Error');
+                    return;
+                }
 
-            //     if (!result.value) {
-            //         console.log('Email not found or hobby already exists');
-            //         res.send('Email not found or hobby already exists');
-            //         return;
-            //     }
+                if (!result.value) {
+                    console.log('Email not found or hobby already exists');
+                    res.send('Email not found or hobby already exists');
+                    return;
+                }
 
-            //     console.log('Hobby added successfully');
-            //     res.send('Hobby added successfully');
-            // })
+                console.log('Hobby added successfully');
+                res.send('Hobby added successfully');
+            })
         })
 
 

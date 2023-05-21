@@ -47,4 +47,4 @@ export const userApi = apiSlice.injectEndpoints({
 })
 
 
-export const { useAddUserMutation } = userApi; 
+export const { useAddUserMutation, useAddBookingsMutation } = userApi; 
