@@ -56,27 +56,16 @@ async function run() {
         app.put('/user/addBooking', async (req, res) => {
             const {email, bookingDetails} = req.body ; 
             const filter = { email: req.body.email }
-            console.log(req.body);
+            // console.log(req.body);
 
             const update = {
                 $addToSet: {
                     bookings: bookingDetails
                 }
             }
-            try {
-                const result = await userDatabase.findOneAndUpdate(filter, update);
-                if (!result) {
-                  console.log('Email not found or booking already exists');
-                  res.send('Email not found or booking already exists');
-                  return;
-                }
+            const result = await userDatabase.findOneAndUpdate(filter, update);
+            res.send(result);
             
-                console.log('Booking added successfully');
-                res.send('Booking added successfully');
-              } catch (err) {
-                console.error('Error while updating the document:', err);
-                res.status(500).send('Internal Server Error');
-              }
         })
 
         // --- get a single user data

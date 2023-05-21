@@ -37,9 +37,9 @@ export const userApi = apiSlice.injectEndpoints({
             }),
             async onQueryStarted(arg, { queryFulfilled, dispatch }) {
                 try {
-                    console.log('Sending data : ',arg)
+                    
                     const bookingAdded = await queryFulfilled;
-                    console.log('Response from Server : ',bookingAdded)
+                    // console.log('Response from Server : ',bookingAdded)
                     // if (userAdded.data.acknowledged) {
                     //     dispatch(addedUser(true))
                     // }
