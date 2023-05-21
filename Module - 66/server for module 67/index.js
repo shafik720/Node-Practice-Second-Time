@@ -51,40 +51,32 @@ async function run() {
             // console.log(result);
         })
 
+
         // --- update a user with new bookings
-        app.patch('/user/addBooking', async (req, res) => {
+        app.put('/user/addBooking', async (req, res) => {
+            const {email, bookingDetails} = req.body ; 
+            const filter = { email: req.body.email }
             console.log(req.body);
-            const query = {
-                'user.email': req.body.email,
-                'user.bookings': {
-                    $not: {
-                        $elemMatch: {
-                            service_id: req.body.bookingDetails.service_id
-                        }
-                    }
-                }
-            }
+
             const update = {
-                $push: {
-                    'user.bookings': req.body.bookingDetails
+                $addToSet: {
+                    bookings: bookingDetails
                 }
             }
-            const result = userDatabase.findOneAndUpdate(query, update, (err, result) => {
-                if (err) {
-                    console.error('Error while updating the document:', err);
-                    // res.status(500).send('Internal Server Error');
-                    return;
+            try {
+                const result = await userDatabase.findOneAndUpdate(filter, update);
+                if (!result) {
+                  console.log('Email not found or booking already exists');
+                  res.send('Email not found or booking already exists');
+                  return;
                 }
-
-                if (!result.value) {
-                    console.log('Email not found or hobby already exists');
-                    res.send('Email not found or hobby already exists');
-                    return;
-                }
-
-                console.log('Hobby added successfully');
-                res.send('Hobby added successfully');
-            })
+            
+                console.log('Booking added successfully');
+                res.send('Booking added successfully');
+              } catch (err) {
+                console.error('Error while updating the document:', err);
+                res.status(500).send('Internal Server Error');
+              }
         })
 
 

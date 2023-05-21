@@ -24,7 +24,8 @@ const ServiceCard = ({ data }) => {
         addBookings({
             email : user.email,
             bookingDetails : {
-                service_id 
+                service_id ,
+                id
             }
         });
     }

@@ -26,7 +26,7 @@ export const userApi = apiSlice.injectEndpoints({
         addBookings : builder.mutation({
             query : ({email, bookingDetails}) =>({
                 url : '/user/addBooking',
-                method : 'PATCH',
+                method : 'PUT',
                 body : {email, bookingDetails}
             }),
             async onQueryStarted(arg, { queryFulfilled, dispatch }) {
