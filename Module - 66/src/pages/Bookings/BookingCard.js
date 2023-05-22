@@ -3,7 +3,7 @@ import dummyImg from '../../assets/img/spiderman.jpg'
 import { useDeleteBookingMutation, useGetSingleServiceQuery } from '../../app/features/services/serviceApi';
 import { ClipLoader } from 'react-spinners';
 
-const BookingCard = ({ data }) => {
+const BookingCard = ({ data, email }) => {
     const { service_id, id } = data;
 
     // --- deleting a booking         
@@ -12,7 +12,7 @@ const BookingCard = ({ data }) => {
     const { data: service, isLoading, isError, error, isSuccess } = useGetSingleServiceQuery(service_id, {skip : !data});
 
     const handleDelete = (deletedId) => {
-        deleteBooking(deletedId);
+        deleteBooking({email , id: deletedId});
     }
 
     let content = null;

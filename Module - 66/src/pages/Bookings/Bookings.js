@@ -9,7 +9,7 @@ const Bookings = () => {
     const [user] = useAuthState(auth);
     
     const{data, isLoading, isError,isSuccess, error} = useGetUserQuery(user?.email,{skip : !user});
-    
+    // console.log(data);
     let content = null ; 
 
     if(isLoading && !isError){
@@ -22,8 +22,10 @@ const Bookings = () => {
 
     if(!isLoading && !isError && isSuccess && data?.bookings.length > 0 ){
         
-        content = <>{data.bookings.map(index => <BookingCard key={index.service_id} data={index}></BookingCard>)}</> 
+        content = <>{data.bookings.map(index => <BookingCard key={index.service_id} data={index} email={user.email} ></BookingCard>)}</> 
     }
+
+
 
 
     return (

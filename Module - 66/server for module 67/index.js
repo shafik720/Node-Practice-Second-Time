@@ -78,9 +78,12 @@ async function run() {
         })
 
         // --- delete a bookings 
-        app.delete('/bookings/delete/:id', async(req, res)=>{
-            const{id} = req.params;
-            console.log(id) ; 
+        app.put('/bookings/delete', async(req, res)=>{
+            const{email, id} = req.body;
+            // const filter = {}
+            // const query = {service_id : id};
+            // const result = await 
+            console.log(email,id) ; 
         })
 
         // --- get a single user data

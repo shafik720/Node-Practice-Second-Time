@@ -30,9 +30,10 @@ export const serviceApi = apiSlice.injectEndpoints({
         }),
 
         deleteBooking : builder.mutation({
-            query : (id) => ({
-                url : `/bookings/delete/${id}`,
-                method : 'DELETE' 
+            query : ({email, id}) => ({
+                url : `/bookings/delete`,
+                method : 'PUT' ,
+                body : {email, id}
             })
         })
     })
