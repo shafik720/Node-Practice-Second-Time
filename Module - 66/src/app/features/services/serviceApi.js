@@ -13,6 +13,10 @@ export const serviceApi = apiSlice.injectEndpoints({
             query : ({email, id}) => `/services/`
         }),
 
+        getSingleService : builder.query({
+            query : (id)=> `/service/${id}`
+        }),
+
         addServiceBooking : builder.mutation({
             query : (data)  => ({
                 url : '/bookings/add',
@@ -28,4 +32,4 @@ export const serviceApi = apiSlice.injectEndpoints({
 })
 
 
-export const {useGetServicesQuery, useAddServiceBookingMutation} = serviceApi ; 
+export const {useGetServicesQuery, useAddServiceBookingMutation , useGetSingleServiceQuery} = serviceApi ; 

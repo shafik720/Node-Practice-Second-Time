@@ -9,7 +9,7 @@ app.use(cors());
 require('dotenv').config();
 
 // --- mongodb functionality
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const uri = `mongodb+srv://${process.env.REACT_APP_DB_USER}:${process.env.REACT_APP_DB_PASSWORD}@cluster0.ddq9cat.mongodb.net/?retryWrites=true&w=majority`;
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
@@ -32,6 +32,19 @@ async function run() {
             const cursor = serviceCollection.find(query);
             const result = await cursor.toArray();
             res.send(result);
+        })
+
+        // --- getting single service details
+        app.get('/service/:id', async(req, res)=>{
+            const {id} = req.params;
+            console.log(id);
+
+            // const query =  {_id : new ObjectId(id)};
+            const query =  {service_id: id};
+            
+            const result = await serviceCollection.findOne(query);
+            console.log("result : ", result);
+            res.send(result) ; 
         })
 
         //   --- add a user
