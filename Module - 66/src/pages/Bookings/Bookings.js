@@ -22,7 +22,7 @@ const Bookings = () => {
 
     if(!isLoading && !isError && isSuccess && data?.bookings.length > 0 ){
         
-        content = <>{data.bookings.map(index => <BookingCard key={index._id} data={index}></BookingCard>)}</> 
+        content = <>{data.bookings.map(index => <BookingCard key={index.service_id} data={index}></BookingCard>)}</> 
     }
 
 

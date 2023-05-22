@@ -37,13 +37,12 @@ async function run() {
         // --- getting single service details
         app.get('/service/:id', async(req, res)=>{
             const {id} = req.params;
-            console.log(id);
 
             // const query =  {_id : new ObjectId(id)};
             const query =  {service_id: id};
             
             const result = await serviceCollection.findOne(query);
-            console.log("result : ", result);
+            
             res.send(result) ; 
         })
 
@@ -61,15 +60,13 @@ async function run() {
             }
             const result = await userDatabase.updateOne(filter, updatedDoc, options);
             res.send(result)
-            // console.log(result);
         })
 
 
         // --- update a user with new bookings
         app.put('/user/addBooking', async (req, res) => {
             const {email, bookingDetails} = req.body ; 
-            const filter = { email: req.body.email }
-            console.log(req.body);
+            const filter = { email: req.body.email };
 
             const update = {
                 $addToSet: {
@@ -78,7 +75,12 @@ async function run() {
             }
             const result = await userDatabase.findOneAndUpdate(filter, update);
             res.send(result);
-            
+        })
+
+        // --- delete a bookings 
+        app.delete('/bookings/delete/:id', async(req, res)=>{
+            const{id} = req.params;
+            console.log(id) ; 
         })
 
         // --- get a single user data
@@ -96,7 +98,6 @@ async function run() {
 
             const query = { 'user.email': email };
             const result = await bookedServiceCollection.findOne(query);
-            // console.log(result); 
             res.send(result);
         })
 

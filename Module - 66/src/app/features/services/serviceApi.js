@@ -27,9 +27,16 @@ export const serviceApi = apiSlice.injectEndpoints({
                 // --- optimistic update
                 // console.log(arg)  ; 
             }
+        }),
+
+        deleteBooking : builder.mutation({
+            query : (id) => ({
+                url : `/bookings/delete/${id}`,
+                method : 'DELETE' 
+            })
         })
     })
 })
 
 
-export const {useGetServicesQuery, useAddServiceBookingMutation , useGetSingleServiceQuery} = serviceApi ; 
+export const {useGetServicesQuery, useAddServiceBookingMutation , useGetSingleServiceQuery, useDeleteBookingMutation} = serviceApi ; 
