@@ -20,7 +20,7 @@ const Header = () => {
     let counter = null; 
     const userStates = useSelector(state => state.user);
     const{user: userInStates} = userStates; 
-    console.log(userInStates?.bookings?.length);
+    
     if(userInStates?.bookings?.length > 0){
         counter = userInStates.bookings.length;
     }
