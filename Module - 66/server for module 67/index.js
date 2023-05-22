@@ -88,7 +88,7 @@ async function run() {
                 }
             }
             const result = await userDatabase.findOneAndUpdate(filter, update, {returnOriginal : false}) ; 
-            console.log(result);
+            
             res.send(result);
         })
 
