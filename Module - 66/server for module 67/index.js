@@ -56,11 +56,11 @@ async function run() {
         app.put('/user/addBooking', async (req, res) => {
             const {email, bookingDetails} = req.body ; 
             const filter = { email: req.body.email }
-            // console.log(req.body);
+            console.log(req.body);
 
             const update = {
                 $addToSet: {
-                    bookings: bookingDetails
+                    'bookings': bookingDetails
                 }
             }
             const result = await userDatabase.findOneAndUpdate(filter, update);

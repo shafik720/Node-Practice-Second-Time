@@ -39,10 +39,12 @@ export const userApi = apiSlice.injectEndpoints({
                 try {
                     
                     const bookingAdded = await queryFulfilled;
-                    // console.log('Response from Server : ',bookingAdded)
-                    // if (userAdded.data.acknowledged) {
-                    //     dispatch(addedUser(true))
-                    // }
+                    console.log('Response from Server : ',bookingAdded)
+                    if (bookingAdded) {
+                        const pathResult = dispatch(apiSlice.util.updateQueryData('getUser', arg.email, (draft)=>{
+                            draft?.bookings?.push(arg.bookingDetails);
+                        }))
+                    }
                     
                 } catch (err) {
                     console.log(err)
