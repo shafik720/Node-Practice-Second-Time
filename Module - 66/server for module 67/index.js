@@ -80,10 +80,16 @@ async function run() {
         // --- delete a bookings 
         app.put('/bookings/delete', async(req, res)=>{
             const{email, id} = req.body;
-            // const filter = {}
-            // const query = {service_id : id};
-            // const result = await 
-            console.log(email,id) ; 
+            const filter = {email : email}
+            
+            const update = {
+                $pull : {
+                    bookings : {service_id : id}
+                }
+            }
+            const result = await userDatabase.findOneAndUpdate(filter, update, {returnOriginal : false}) ; 
+            console.log(result);
+            res.send(result);
         })
 
         // --- get a single user data
