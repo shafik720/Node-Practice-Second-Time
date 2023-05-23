@@ -14,7 +14,13 @@ export const serviceApi = apiSlice.injectEndpoints({
         }),
 
         getSingleService: builder.query({
-            query: (id) => `/service/${id}`
+            query: (id) => ({
+                url :  `/service/${id}`,                
+                headers : {
+                    // --- for jwt token
+                    authorization : `Bearer ${localStorage.getItem('token')}`
+                }
+            })
         }),
 
         addServiceBooking: builder.mutation({

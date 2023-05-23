@@ -34,6 +34,7 @@ export const userApi = apiSlice.injectEndpoints({
                 url : '/user/addBooking',
                 method : 'PUT',
                 headers : {
+                    // --- for jwt token
                     authorization : `Bearer ${localStorage.getItem('token')}`
                 },
                 body : {email, bookingDetails}

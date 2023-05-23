@@ -46,6 +46,7 @@ const ServiceCard = ({ data }) => {
     let buttonText = 'Book Now';
     // --- logout user
     const [signOut] = useSignOut(auth);
+    
 
     if (isLoading && !isError) {
         customClassbtn = 'btn btn-warning';

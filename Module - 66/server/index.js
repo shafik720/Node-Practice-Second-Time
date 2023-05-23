@@ -94,7 +94,7 @@ async function run() {
         })
 
         // --- getting single service details
-        app.get('/service/:id', async (req, res) => {
+        app.get('/service/:id', verifyJWT, async (req, res) => {
             const { id } = req.params;
 
             // const query =  {_id : new ObjectId(id)};
