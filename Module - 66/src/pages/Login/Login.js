@@ -60,9 +60,24 @@ const Login = () => {
             errorMsg(error.message)
         }
         if(user || googleUser){
+            const currentUser = {
+                email : user?.user?.email
+            } 
+            fetch('http://localhost:5000/jwt',{
+                method : 'POST',
+                headers : {
+                    'content-type' : 'application/json'
+                },
+                body : JSON.stringify(currentUser)
+            })
+            .then(res => res.json())
+            .then(data=>{
+                console.log(data);
+                localStorage.setItem('token', data.token)
+            })
             navigate(from, {replace: true});
         }
-    },[loading, error, user])
+    },[loading, error, user, googleUser, navigate, from])
     return (
         <div className="card  w-full my-10 ">
             <div className="card-body w-full sm:w-full md:w-4/6 mx-auto lg:w-2/6 shadow-2xl">
