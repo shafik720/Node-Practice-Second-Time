@@ -1,87 +1,157 @@
 
 const express = require('express');
-const app = express() ; 
-const port = process.env.PORT || 5000 ; 
+// --- mongodb functionality
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
+const app = express();
+const port = process.env.PORT || 5000;
 const cors = require('cors');
 
-app.use(express.json()); 
+app.use(express.json());
 app.use(cors());
+require('dotenv').config();
 
-
-const uri = "mongodb+srv://shafikrasel5:sDHMGPmoZzUsbaVM@cluster0.hjqwlrm.mongodb.net/?retryWrites=true&w=majority";
+const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.ddq9cat.mongodb.net/?retryWrites=true&w=majority`;
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
-const client = new MongoClient(uri, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-  }
-});
+const client = new MongoClient(uri);
 
 async function run() {
     try {
-      const database = client.db("PracticeDB");
-      const folder = database.collection("PracticeProduct");
+        // Connect the client to the server	(optional starting in v4.7)
+         client.connect();
 
-      // --- add a new product      
-      app.post('/products/add', async(req, res)=>{
-        const body = req.body;
-        // console.log(body);
-        const result = await folder.insertOne(body);
-        res.send(result) ; 
-      })
-      
-      // --- get all products
-      app.get('/products', async(req,res)=>{
-        const query = {} ; 
-        const cursor = folder.find(query);
-        const result = await cursor.toArray();
-        res.send(result) ;
-      })
+        const serviceCollection = client.db("Car_Service_Practice").collection('Services');
+        const bookedServiceCollection = client.db("Car_Service_Practice").collection('Bookings');
+        const userDatabase = client.db("Car_Service_Practice").collection('Users');
 
-      // --- delete a product
-      app.delete('/products/delete/:id', async(req, res)=>{
-        const params = req.params;
-        const {id} = params;
-        const query = {_id : new ObjectId(id)};
-        const result =  await folder.deleteOne(query);
-        res.send(result);
-      })
+        // --- getting all users
+        app.get('/users', async(req, res)=>{
+            const query = {} ;
+            const cursor = userDatabase.find(query);
+            const result = await cursor.toArray() ; 
+            res.send(result);
+        })
 
-      // --- get a single product details
-      app.get('/products/:id', async(req, res)=>{
-        const params = req.params;
-        const {id} = params ; 
-        const query = {_id : new ObjectId(id)};
-        const result = await folder.findOne(query);
-        res.send(result) ; 
-      })
+        // --- getting 
+        app.get('/testing', async(req, res)=>{
+            const query = {} ;
+            const cursor = serviceCollection.find(query);
+            const result = await cursor.toArray();
+            res.send(result)
+        })
 
-      // --- update a product 
-      app.patch('/products/update/:id', async(req, res)=>{
-        const params = req.params;
-        const {id} = params ; 
-        const data = req.body;
-        const filter = {_id : new ObjectId(id)};
-        const update = {$set : data};
+        // --- getting all the service details from server
+        app.get('/services', async (req, res) => {
+            const query = {};
+            const cursor = serviceCollection.find(query);
+            const result = await cursor.toArray();
+            res.send(result);
+        })
 
-        const result = await folder.updateOne(filter, update);
-        res.send(result) ; 
-      })
-      
+        // --- getting single service details
+        app.get('/service/:id', async (req, res) => {
+            const { id } = req.params;
+
+            // const query =  {_id : new ObjectId(id)};
+            const query = { service_id: id };
+
+            const result = await serviceCollection.findOne(query);
+
+            res.send(result);
+        })
+
+        //   --- add a user
+        app.put('/addUser', async (req, res) => {
+            const filter = { email: req.body.email }
+            const options = { upsert: true }
+
+            const updatedDoc = {
+                $set: {
+                    email: req.body.email,
+                    displayName: req.body.displayName,
+                    role: req.body.role
+                }
+            }
+            const result = await userDatabase.updateOne(filter, updatedDoc, options);
+            res.send(result)
+        })
+
+
+        // --- update a user with new bookings
+        app.put('/user/addBooking', async (req, res) => {
+            const { email, bookingDetails } = req.body;
+            const filter = { email: req.body.email };
+
+            const update = {
+                $addToSet: {
+                    'bookings': bookingDetails
+                }
+            }
+            const result = await userDatabase.findOneAndUpdate(filter, update);
+            res.send(result);
+        })
+
+        // --- delete a bookings 
+        app.put('/bookings/delete', async (req, res) => {
+            const { email, id } = req.body;
+            const filter = { email: email }
+
+            const update = {
+                $pull: {
+                    bookings: { service_id: id }
+                }
+            }
+            const result = await userDatabase.findOneAndUpdate(filter, update, { returnOriginal: false });
+
+            res.send(result);
+        })
+
+        // --- get a single user data
+        app.get('/users/:email', async (req, res) => {
+            const params = req.params;
+            const { email } = params;
+            const query = { email: email };
+            const result = await userDatabase.findOne(query);
+            res.send(result)
+        })
+
+        // --- get single booking details
+        app.get('/bookings/singleBookings', async (req, res) => {
+            const { email } = req.query;
+
+            const query = { 'user.email': email };
+            const result = await bookedServiceCollection.findOne(query);
+            res.send(result);
+        })
+
+        app.get('/test', (req, res) => {
+            res.send('testing from inside the function of firebase ');
+        })
+
     } finally {
-    //   await client.close();
+        //   await client.close();
     }
-  }
-  run().catch(console.dir);
+}
+run().catch(console.dir);
 
-
-app.get('/', (req, res)=>{
-    res.send('Ok got it') ; 
-});
-
-
-app.listen(port, ()=>{
-    console.log('Listening to port 5000') ;
+app.get('/', (req, res) => {
+    res.send('Trying again');
 })
+
+
+
+
+app.listen(port, () => {
+    console.log('Listening to port 5000 ');
+})
+
+
+
+/* user : {
+    email : rasel@gmail.com,
+    name : rasel,
+    hobby : [
+        {title : 'singing', title_id : 1},
+        {title : 'boating', title_id : 2},
+        {title : 'dancing', title_id : 3},
+    ]
+} */
