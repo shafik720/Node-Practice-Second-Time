@@ -24,11 +24,49 @@ async function run() {
         const bookedServiceCollection = client.db("Car_Service_Practice").collection('Bookings');
         const userDatabase = client.db("Car_Service_Practice").collection('Users');
 
+
         // --- jwt token
+        function verifyJWT(req, res, next){
+            // console.log(req.headers.authorization);
+            const authHeader = req.headers.authorization ; 
+            if(!authHeader){
+                return res.status(401).send({message : 'Header Paowa jaynai'});
+            }
+            const token = authHeader.split(' ')[1];
+            jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, function(err, decoded){
+                if(err){
+                    return res.status(403).send({message : 'JWT token verify hoynay'});
+                }
+                req.decoded = decoded ; 
+                next();
+            })
+        }
+
         app.post('/jwt', (req, res)=>{
             const user = req.body ; 
             const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {expiresIn : '1h'});
             res.send({token});
+        })
+
+
+        
+        // --- update a user with new bookings
+        app.put('/user/addBooking', verifyJWT, async (req, res) => {
+            const decoded = req.decoded ; // --- got this from verifyJWT function
+            // console.log('Inside server order api : ', decoded);
+
+            const { email, bookingDetails } = req.body;
+            if(decoded.email !== email){
+                return res.status(403).send({message : 'Email invalid'})
+            }
+            const filter = { email: req.body.email };
+            const update = {
+                $addToSet: {
+                    'bookings': bookingDetails
+                }
+            }
+            const result = await userDatabase.findOneAndUpdate(filter, update);
+            res.send(result);
         })
 
         // --- getting all users
@@ -84,19 +122,6 @@ async function run() {
         })
 
 
-        // --- update a user with new bookings
-        app.put('/user/addBooking', async (req, res) => {
-            const { email, bookingDetails } = req.body;
-            const filter = { email: req.body.email };
-
-            const update = {
-                $addToSet: {
-                    'bookings': bookingDetails
-                }
-            }
-            const result = await userDatabase.findOneAndUpdate(filter, update);
-            res.send(result);
-        })
 
         // --- delete a bookings 
         app.put('/bookings/delete', async (req, res) => {

@@ -22,7 +22,7 @@ export const userApi = apiSlice.injectEndpoints({
                     console.log(err)
                 }
             }
-        }),
+        }),  
         getUser : builder.query({
             query : (email)=> ({
                 url : `/users/${email}`,
@@ -33,6 +33,9 @@ export const userApi = apiSlice.injectEndpoints({
             query : ({email, bookingDetails}) =>({
                 url : '/user/addBooking',
                 method : 'PUT',
+                headers : {
+                    authorization : `Bearer ${localStorage.getItem('token')}`
+                },
                 body : {email, bookingDetails}
             }),
             async onQueryStarted(arg, { queryFulfilled, dispatch }) {

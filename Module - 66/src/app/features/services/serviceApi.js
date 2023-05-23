@@ -21,6 +21,9 @@ export const serviceApi = apiSlice.injectEndpoints({
             query: (data) => ({
                 url: '/bookings/add',
                 method: 'PUT',
+                headers : {
+                    authorization : `Bearer ${localStorage.getItem('token')}`
+                },
                 body: data,
             }),
             async onQueryStarted(arg, { queryFulfilled, dispatch }) {
